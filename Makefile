@@ -1,17 +1,17 @@
 # Globals
-THEME_NAME = semantic_ui
-THEME_DIR = ${PWD}/devpi_$(THEME_NAME)
+THEME_NAME = semantic-ui
 SERVER_DIR = ${PWD}/tmp/server
 CLIENT_DIR = ${PWD}/tmp/client
 HOST = 127.0.0.1
 PORT = 3141
 
 init:
-	pipenv install --dev
+	pipenv install --dev --skip-lock
+	python setup.py install
 	devpi-server --init --serverdir $(SERVER_DIR)
 
 pre-serve:
-	devpi-server --start --host $(HOST) --port $(PORT) --serverdir $(SERVER_DIR) --theme $(THEME_DIR)
+	devpi-server --start --host $(HOST) --port $(PORT) --serverdir $(SERVER_DIR) --theme $(THEME_NAME)
 
 post-serve:
 	devpi use http://$(HOST):$(PORT) --clientdir $(CLIENT_DIR)
